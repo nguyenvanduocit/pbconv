@@ -1,0 +1,8 @@
+syntax = "proto3";
+package testdata;
+option go_package = "github.com/nguyenvanduocit/ptconv/testdata;testdata";
+
+message FooMessage {
+    string message = 1;
+}
+
