@@ -26,6 +26,20 @@ func ToBase64JsonString(m proto.Message) ([]byte, error) {
 	return buf, nil
 }
 
+// ToBase64 convert proto message to base64
+func ToBase64(m proto.Message) ([]byte, error) {
+	body, err := proto.Marshal(m)
+	if err != nil {
+		return nil, errors.WithMessage(err, "failed to marshal the message")
+	}
+
+	buf := make([]byte, base64.RawStdEncoding.EncodedLen(len(body)))
+
+	base64.RawStdEncoding.Encode(buf, body)
+
+	return buf, nil
+}
+
 // FromBase64JsonString unwrap `"` then unmarshal to base64 then unmarshal to proto message
 func FromBase64JsonString(src []byte, dst proto.Message) error {
 	srcLen := len(src)
@@ -37,6 +51,21 @@ func FromBase64JsonString(src []byte, dst proto.Message) error {
 	buf := make([]byte, base64.RawStdEncoding.DecodedLen(len(unWrappedSrc)))
 
 	if _, err := base64.RawStdEncoding.Decode(buf, unWrappedSrc); err != nil {
+		return err
+	}
+
+	if err := proto.Unmarshal(buf, dst); err != nil {
+		return errors.WithMessage(err, "failed to marshal the message")
+	}
+
+	return nil
+}
+
+// FromBase64  base64 then unmarshal to proto message
+func FromBase64(src []byte, dst proto.Message) error {
+	buf := make([]byte, base64.RawStdEncoding.DecodedLen(len(src)))
+
+	if _, err := base64.RawStdEncoding.Decode(buf, src); err != nil {
 		return err
 	}
 
