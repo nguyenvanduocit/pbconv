@@ -1,4 +1,4 @@
-package ptconv
+package pbconv
 
 import (
 	"encoding/base64"
