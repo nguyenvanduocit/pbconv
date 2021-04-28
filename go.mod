@@ -1,4 +1,4 @@
-module github.com/nguyenvanduocit/ptconv
+module github.com/nguyenvanduocit/pbconv
 
 go 1.16
 
