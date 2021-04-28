@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/nguyenvanduocit/ptconv/testdata"
+	"github.com/nguyenvanduocit/pbconv/testdata"
 )
 
 var fooMessage = &testdata.FooMessage{
